@@ -2,9 +2,12 @@ import mongoose from "mongoose";
 import express from "express";
 import userRouter from "./route/userRouter.js";
 import bodyParser from "body-parser";
-import jwt from "jsonwebtoken"; // 🔧 fixed typo in package name
+import jwt from "jsonwebtoken"; 
+import dotenv from "dotenv"
 
 const app = express();
+
+dotenv.config();
 
 app.use(bodyParser.json());
 
