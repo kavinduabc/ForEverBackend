@@ -19,3 +19,7 @@ export function rejisterUser(req,res){
         })
     })
 }
+
+export function userLogin(req,res){
+    
+}

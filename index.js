@@ -1,22 +1,49 @@
 import mongoose from "mongoose";
 import express from "express";
+import userRouter from "./route/userRouter.js";
+import bodyParser from "body-parser";
+import jwt from "jsonwebtoken"; // 🔧 fixed typo in package name
 
+const app = express();
 
-let app = express()
+app.use(bodyParser.json());
 
+// Middleware to verify JWT
+app.use((req, res, next) => {
+  let token = req.header("Authentication");
 
+  if (token) {
+    token = token.replace("Bearer ", ""); // added space after 'Bearer'
 
-const mongoUrl = "mongodb+srv://abc:root@cluster0.i2xn0i4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-mongoose.connect(mongoUrl)
-let connection = mongoose.connection
+    jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+      if (err) {
+        console.error("JWT verification Failed", err.message);
+      } else {
+        req.user = decoded;
+      }
+    });
+  }
 
-connection.once("open",()=>{
-    console.log("MongoDB connection is successfully")
-})
+  next(); // 🔧 this was missing
+});
 
-app.listen(4000,()=>{
-    console.log("server is running on port 4000")
-})
+// Routing
+app.use("/api/user", userRouter); // 🔧 missing '/' at start
 
+// MongoDB connection
+const mongoUrl = "mongodb+srv://abc:root@cluster0.i2xn0i4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
+mongoose.connect(mongoUrl, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
+const connection = mongoose.connection;
+connection.once("open", () => {
+  console.log("MongoDB connection is successful");
+});
+
+// Start server
+app.listen(4000, () => {
+  console.log("Server is running on port 4000");
+});
