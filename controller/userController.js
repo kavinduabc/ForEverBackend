@@ -35,7 +35,7 @@ export function userLogin(req, res) {
                     name: user.name,
                     email: user.email,
                     password : user.password,
-                    type : user.type
+                    role : user.role
                 },
                 process.env.JWT_SECRET || "default_secret", // Make sure to define JWT_SECRET in .env
                 { expiresIn: "1h" }
