@@ -12,7 +12,13 @@ import mongoose from "mongoose";
     password:{
         type:String,
         required:true
+    },
+    type :{
+      type : String,
+      required : true,
+      default : "customer"
     }
+
   })
 
   const User = mongoose.model("user",userSchema)
