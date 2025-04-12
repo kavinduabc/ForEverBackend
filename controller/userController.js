@@ -33,7 +33,9 @@ export function userLogin(req, res) {
             const token = jwt.sign(
                 {
                     name: user.name,
-                    email: user.email
+                    email: user.email,
+                    password : user.password,
+                    type : user.type
                 },
                 process.env.JWT_SECRET || "default_secret", // Make sure to define JWT_SECRET in .env
                 { expiresIn: "1h" }
