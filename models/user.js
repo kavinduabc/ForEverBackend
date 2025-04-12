@@ -13,7 +13,7 @@ import mongoose from "mongoose";
         type:String,
         required:true
     },
-    type :{
+    role :{
       type : String,
       required : true,
       default : "customer"
