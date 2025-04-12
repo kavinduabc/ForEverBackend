@@ -4,10 +4,14 @@ import userRouter from "./route/userRouter.js";
 import bodyParser from "body-parser";
 import jwt from "jsonwebtoken"; 
 import dotenv from "dotenv"
+import cors from "cors";
+
+
+dotenv.config();
 
 const app = express();
 
-dotenv.config();
+app.use(cors())
 
 app.use(bodyParser.json());
 
