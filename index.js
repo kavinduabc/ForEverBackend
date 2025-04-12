@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import jwt from "jsonwebtoken"; 
 import dotenv from "dotenv"
 import cors from "cors";
+import productRouter from "./route/productRouter.js";
 
 
 dotenv.config();
@@ -35,7 +36,8 @@ app.use((req, res, next) => {
 });
 
 // Routing
-app.use("/api/user", userRouter); // 🔧 missing '/' at start
+app.use("/api/user", userRouter); 
+app.use("/api/product",productRouter)
 
 // MongoDB connection
 const mongoUrl = "mongodb+srv://abc:root@cluster0.i2xn0i4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";

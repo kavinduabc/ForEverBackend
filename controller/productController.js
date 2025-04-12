@@ -24,7 +24,7 @@ export function addProduct(req,res){
             message : "product added successfully"
         })
     }).catch((e)=>{
-        res.json({
+        res.status(500).json({
             message : "product added faild"
         })
     })
