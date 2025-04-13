@@ -11,7 +11,7 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors());
+app.use(cors()); // Enable CORS
 app.use(express.json()); // Built-in body parser
 
 // JWT Middleware
@@ -19,11 +19,11 @@ app.use((req, res, next) => {
   let token = req.header("Authorization");
 
   if (token) {
-    token = token.replace("Bearer ", "");
+    token = token.replace("Bearer ", ""); // Fixed space after Bearer
 
-    jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
-        console.error("JWT verification Failed", err.message);
+        console.error("JWT verification failed:", err.message);
       } else {
         console.log("JWT verified:", decoded);
         req.user = decoded;
@@ -41,7 +41,7 @@ app.use("/api/product", productRouter);
 // MongoDB connection
 const mongoUrl = "mongodb+srv://abc:root@cluster0.i2xn0i4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
-mongoose.connect(mongoUrl); 
+mongoose.connect(mongoUrl);
 
 const connection = mongoose.connection;
 connection.once("open", () => {
