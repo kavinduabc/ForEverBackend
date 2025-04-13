@@ -3,7 +3,7 @@ import Product from "../models/product.js";
 
 export function addProduct(req,res){
 
-    if( user == null){
+    if( req.user == null){
         res.status(401).json({
             message : "Please login"
         })
@@ -24,8 +24,11 @@ export function addProduct(req,res){
             message : "product added successfully"
         })
     }).catch((e)=>{
+        
         res.status(500).json({
-            message : "product added faild"
+            
+            message : "product added faild",
+            
         })
     })
 
