@@ -3,6 +3,8 @@ import Product from "../models/product.js";
 
 export function addProduct(req,res){
 
+    console.log("addProduct hit");
+    
     if( req.user == null){
         res.status(401).json({
             message : "Please login"

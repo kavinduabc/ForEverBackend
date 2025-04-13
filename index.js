@@ -1,51 +1,47 @@
+// index.js
 import mongoose from "mongoose";
 import express from "express";
 import userRouter from "./route/userRouter.js";
-import bodyParser from "body-parser";
 import jwt from "jsonwebtoken"; 
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 import cors from "cors";
 import productRouter from "./route/productRouter.js";
-
 
 dotenv.config();
 
 const app = express();
 
-app.use(cors())
+app.use(cors());
+app.use(express.json()); // Built-in body parser
 
-app.use(bodyParser.json());
-
-// Middleware to verify JWT
+// JWT Middleware
 app.use((req, res, next) => {
-  let token = req.header("Authentication");
+  let token = req.header("Authorization");
 
   if (token) {
-    token = token.replace("Bearer ", ""); // added space after 'Bearer'
+    token = token.replace("Bearer ", "");
 
     jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
       if (err) {
         console.error("JWT verification Failed", err.message);
       } else {
+        console.log("JWT verified:", decoded);
         req.user = decoded;
       }
     });
   }
 
-  next(); // 🔧 this was missing
+  next();
 });
 
-// Routing
-app.use("/api/user", userRouter); 
-app.use("/api/product",productRouter)
+// Routes
+app.use("/api/user", userRouter);
+app.use("/api/product", productRouter);
 
 // MongoDB connection
 const mongoUrl = "mongodb+srv://abc:root@cluster0.i2xn0i4.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
-mongoose.connect(mongoUrl, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(mongoUrl); 
 
 const connection = mongoose.connection;
 connection.once("open", () => {
