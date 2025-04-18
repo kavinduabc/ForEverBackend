@@ -8,7 +8,7 @@ dotenv.config();
 // Register User
 export async function rejisterUser(req, res) {
   try {
-    const { name, email, password } = req.body;
+    const { name,role, email, password } = req.body;
 
     // Check if user already exists
     const existingUser = await User.findOne({ email });
@@ -20,8 +20,10 @@ export async function rejisterUser(req, res) {
 
     const newUser = new User({
       name,
+      role,
       email,
       password: hashedPassword,
+      
     });
 
     await newUser.save();
@@ -58,3 +60,5 @@ export async function userLogin(req, res) {
     res.status(500).json({ error: "Login failed" });
   }
 }
+
+
