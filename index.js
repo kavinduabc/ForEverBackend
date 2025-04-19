@@ -5,6 +5,7 @@ import dotenv from "dotenv"
 import jwt from "jsonwebtoken"
 import userRouter from "./route/userRouter.js"
 import cors from "cors"
+import producRouter from "./route/productRouter.js"
 
 
 dotenv.config();
@@ -41,6 +42,7 @@ connection.once("open",()=>{
 })
 
 app.use("/api/user",userRouter);
+app.use("/api/product",producRouter)
 
 app.listen(4000,()=>{
   console.log("Server is runnig on port 4000")
