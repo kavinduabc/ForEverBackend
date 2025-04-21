@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 
 const productShema = mongoose.Schema({
+    key:{
+        type : Number,
+        required: true
+
+    },
     image:{
         type :[String],
         required:true,
