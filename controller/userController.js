@@ -59,6 +59,35 @@ export async function userLogin(req, res) {
   } catch (err) {
     res.status(500).json({ error: "Login failed" });
   }
+} 
+export async function viewUser(req,res){
+
 }
 
+
+export function checkAdmin(req){
+
+  let isAdmin = false;
+
+  if(req.user != null)
+  {
+    if(req.user.role == "admin")
+    {
+      isAdmin = true;
+    }
+  }
+  return isAdmin;
+}
+
+export function checkCustomer(req){
+  let isCustomer = false;
+  if(req.user != null)
+  {
+    if(req.user.role == "customer")
+    {
+      isCustomer = true;
+    }
+  }
+  return isCustomer;
+}
 
