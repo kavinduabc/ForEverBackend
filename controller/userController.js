@@ -62,6 +62,19 @@ export async function userLogin(req, res) {
 } 
 export async function viewUser(req,res){
 
+  try {
+    if(checkAdmin(req))
+    {
+      const user = await User.find()
+      res.json(user)
+    }
+    
+  } catch (error) {
+    res.status(500).json({
+      message : "Faild get user"
+    })
+  }
+
 }
 
 
